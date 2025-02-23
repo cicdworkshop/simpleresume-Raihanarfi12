@@ -19,6 +19,9 @@ jobs:
         run: |
           rm -rf .git
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/aws_keypair.pem -r . ubuntu@${{ secrets.AWS_IP }}:simpleresume-Raihanarfi12
+      - name: Install dependencies
+        run: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/aws_keypair.pem ubuntu@${{ secrets.AWS_IP }} "pip3 install -r /home/ubuntu/simpleresume-Raihanarfi12/requirements.txt"
       - name: Restart the systemd service
         run: |
           ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /tmp/aws_keypair.pem ubuntu@${{ secrets.AWS_IP }} "sudo systemctl restart web"
